@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "allowJs": true,
+    "target": "es5",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "checkJs": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "baseUrl": "src",
+    "paths": {
+      "@utils/*": ["utils/*"],
+      "@types/*": ["types/*"]
+    },
+    "typeRoots": [
+      "./src/types",
+      "node_modules/@types"
+    ]
+  },
+  "include": ["./src/**/*"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}

@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Location {
+  id Int      @id @default(autoincrement())
+  name String @unique
+  flats Flat[]
+}
+
+model Flat {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  externalId Int      @unique
+  snapshots  Snapshot []
+  location   Location @relation(fields: [locationId], references: [id])
+  locationId Int
+}
+
+model Snapshot {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  price        Decimal  @db.Decimal(18, 2)
+  flat         Flat     @relation(fields: [flatId], references: [id])
+  flatId       Int
+
+  lat          String
+  lon          String
+  area         String?
+  size         String?
+  title        String
+  url          String
+  thumbnailUrl String?
+  floor        String?
+  rawData      RawData @relation(fields: [rawDataId], references: [id])
+  rawDataId    Int
+}
+
+model RawData {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  payload   Json
+  snapshots Snapshot[]
+}
